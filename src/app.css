@@ -1,0 +1,169 @@
+:root {
+  --pico-font-size: 80%;
+  --pico-form-element-spacing-vertical: 0.35rem;
+  --pico-form-element-spacing-horizontal: 0.45rem;
+  --pico-form-element-active-border-color: black;
+  --pico-font-family: Roboto;
+  --pico-font-weight: 400;
+}
+
+body,
+html,
+#app {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+tbody tr.selected td {
+  background-color: var(--pico-primary-background);
+}
+tbody tr:not(.selected):hover td {
+  background-color: var(--pico-form-element-background-color);
+}
+
+thead tr th {
+  background-color: var(--pico-form-element-background-color);
+  font-size: calc(var(--pico-font-size) + 20%);
+}
+
+table caption {
+  text-align: start;
+  font-size: calc(var(--pico-font-size) + 50%);
+  padding: 5px 0 5px 5px;
+  font-weight: 400;
+}
+
+table {
+  width: 100%;
+  table-layout: fixed;
+  min-height: 0;
+  user-select: none;
+}
+
+thead {
+  position: sticky;
+  top: 0;
+}
+
+tbody {
+  display: block;
+  height: 200px;
+  overflow-y: auto;
+}
+thead tr,
+tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+tbody td,
+thead th,
+caption {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+label {
+  width: 100%;
+}
+
+select:has(option[value=""]:checked) {
+  color: var(--pico-muted-color);
+}
+option {
+  color: var(--pico-color);
+}
+select,
+select::picker(select) {
+  appearance: base-select;
+}
+
+select::picker(select) {
+  background: var(--pico-background-color);
+  border: 1px solid var(--pico-border-color);
+}
+
+option:checked {
+  background: var(--pico-primary-background);
+}
+select::picker-icon {
+  display: none;
+}
+
+option::checkmark {
+  display: none;
+}
+
+button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  line-height: normal;
+}
+
+button.primary:active {
+  background-color: color-mix(
+    in srgb,
+    var(--pico-primary-background) 80%,
+    black
+  );
+}
+button.secondary:active {
+  background-color: color-mix(
+    in srgb,
+    var(--pico-secondary-background) 80%,
+    black
+  );
+}
+button.contrast:active {
+  background-color: color-mix(
+    in srgb,
+    var(--pico-contrast-background) 80%,
+    black
+  );
+}
+
+select[size] {
+  overflow: hidden;
+  min-block-size: unset;
+  height: auto;
+}
+
+select[size]:active {
+  border-color: var(--pico-form-element-border-color);
+}
+
+[role="group"] {
+  margin-bottom: 0;
+}
+
+input[type="color"] {
+  margin-bottom: 0;
+}
+
+dialog article {
+  max-width: none;
+}
