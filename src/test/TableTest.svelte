@@ -62,6 +62,7 @@
     },
   ];
   let selectedRow = $state(rows.at(-1));
+  let selectedId = $state(2);
   //   $inspect(selectedRow);
 </script>
 
@@ -71,7 +72,9 @@
     {rows}
     caption="Long Long Table Caption with Text text text"
     scroll="center"
-    bind:selectedRow
+    // bind:selectedRow
+    bind:selectedId
+    select={true}
   />
 </div>
 

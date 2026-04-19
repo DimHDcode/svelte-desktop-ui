@@ -14,10 +14,11 @@
    * @type {{
    *   columns: Column[],
    *   rows: Object[],
-   *   selectedRow: any,
-   *   selectedId: any,
-   *   caption: string,
-   *   scroll: 'nearest' | 'start' | 'center' | 'end' | ''
+   *   selectedRow?: any,
+   *   selectedId?: any,
+   *   caption?: string,
+   *   scroll?: 'nearest' | 'start' | 'center' | 'end' | '',
+   *   select?: boolean
    * }}
    */
   let {
@@ -27,6 +28,7 @@
     selectedId = $bindable(null),
     caption = "",
     scroll = "",
+    select = true,
   } = $props();
 
   $effect(() => {
@@ -40,7 +42,9 @@
 </script>
 
 <table style="height: 100%">
-  <caption> {caption} </caption>
+  {#if caption}
+    <caption> {caption} </caption>
+  {/if}
   <thead>
     <tr>
       {#each columns as column}
@@ -56,10 +60,11 @@
     {#each rows as row}
       <tr
         onclick={() => {
+          if (!select) return;
           selectedRow = row;
           selectedId = row.id;
         }}
-        class:selected={selectedRow?.id === row.id}
+        class:selected={selectedRow?.id === row.id || selectedId == row.id}
       >
         {#each columns as column}
           <td
