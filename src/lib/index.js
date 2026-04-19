@@ -7,3 +7,4 @@ export { default as DtListBox } from "./DtListBox.svelte";
 export { default as DtModalWindow } from "./DtModalWindow.svelte";
 export { default as DtSelect } from "./DtSelect.svelte";
 export { default as DtTable } from "./DtTable.svelte";
+export { default as DtGrid } from "./DtGrid.svelte";

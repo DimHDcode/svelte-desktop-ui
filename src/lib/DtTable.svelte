@@ -15,7 +15,7 @@
    *   columns: Column[],
    *   rows: Object[],
    *   selectedRow?: any,
-   *   selectedId?: any,
+   *   returnId?: boolean,
    *   caption?: string,
    *   scroll?: 'nearest' | 'start' | 'center' | 'end' | '',
    *   select?: boolean
@@ -25,14 +25,14 @@
     columns,
     rows,
     selectedRow = $bindable(null),
-    selectedId = $bindable(null),
+    returnId = false,
     caption = "",
     scroll = "",
     select = true,
   } = $props();
 
   $effect(() => {
-    if (scroll && (selectedRow || selectedId)) {
+    if (scroll && selectedRow) {
       tick().then(() => {
         const el = document.querySelector("tr.selected");
         el?.scrollIntoView({ block: scroll });
@@ -61,10 +61,15 @@
       <tr
         onclick={() => {
           if (!select) return;
-          selectedRow = row;
-          selectedId = row.id;
+          if (returnId) {
+            selectedRow = row.id;
+          } else {
+            selectedRow = row;
+          }
         }}
-        class:selected={selectedRow?.id === row.id || selectedId == row.id}
+        class:selected={returnId
+          ? selectedRow === row.id
+          : selectedRow?.id === row.id}
       >
         {#each columns as column}
           <td

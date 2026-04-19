@@ -1,4 +1,5 @@
 <script>
+  import DtGrid from "../lib/DtGrid.svelte";
   import DtTable from "../lib/DtTable.svelte";
   const columns = [
     {
@@ -61,9 +62,9 @@
       age: 30,
     },
   ];
-  let selectedRow = $state(rows.at(-1));
-  let selectedId = $state(2);
-  //   $inspect(selectedRow);
+  let selectedRow = $state(1);
+
+  // $inspect(selectedRow);
 </script>
 
 <div class="table">
@@ -71,9 +72,16 @@
     {columns}
     {rows}
     caption="Long Long Table Caption with Text text text"
-    scroll="center"
-    // bind:selectedRow
-    bind:selectedId
+    bind:selectedRow
+    returnId={true}
+    select={true}
+  />
+  <DtGrid
+    {columns}
+    {rows}
+    caption="Long Long Table Caption with Text text text"
+    bind:selectedRow
+    returnId={true}
     select={true}
   />
 </div>
@@ -81,5 +89,7 @@
 <style>
   .table {
     height: 20%;
+    display: flex;
+    gap: 1rem;
   }
 </style>
