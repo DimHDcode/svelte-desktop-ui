@@ -1,9 +1,0 @@
-export { default as DtButton } from "./DtButton.svelte";
-export { default as DtButtonsGroup } from "./DtButtonsGroup.svelte";
-export { default as DtColorPicker } from "./DtColorPicker.svelte";
-export { default as DtDialog } from "./DtDialog.svelte";
-export { default as DtInputNumber } from "./DtInputNumber.svelte";
-export { default as DtListBox } from "./DtListBox.svelte";
-export { default as DtModalWindow } from "./DtModalWindow.svelte";
-export { default as DtSelect } from "./DtSelect.svelte";
-export { default as DtTable } from "./DtTable.svelte";
