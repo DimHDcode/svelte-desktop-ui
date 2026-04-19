@@ -1,14 +1,32 @@
 {
-  "name": "web-components-test",
+  "name": "svelte-desktop-ui",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
+  "svelte": "./dist/index.js",
+  "exports": {
+    ".": {
+      "svelte": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./dt-styles.css": "./dist/dt-styles.css"
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:lib": "svelte-package -i ./src/lib -o ./dist",
+    "prepare": "npm run build:lib"
+  },
+  "peerDependencies": {
+    "svelte": "^5"
   },
   "devDependencies": {
+    "@picocss/pico": "^2.1.1",
+    "@sveltejs/package": "^2.5.7",
     "@sveltejs/vite-plugin-svelte": "^7.0.0",
     "prettier-plugin-svelte": "^3.5.1",
     "svelte": "^5.53.12",
@@ -16,7 +34,10 @@
   },
   "dependencies": {
     "@fontsource/roboto": "^5.2.10",
-    "@lucide/svelte": "^1.3.0",
-    "@picocss/pico": "^2.1.1"
+    "@lucide/svelte": "^1.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DimHDcode/svelte-desktop-ui.git"
   }
 }
