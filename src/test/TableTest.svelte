@@ -65,10 +65,18 @@
   //   $inspect(selectedRow);
 </script>
 
-<DtTable
-  {columns}
-  {rows}
-  caption="Long Long Table Caption with Text text text"
-  scroll="center"
-  bind:selectedRow
-/>
+<div class="table">
+  <DtTable
+    {columns}
+    {rows}
+    caption="Long Long Table Caption with Text text text"
+    scroll="center"
+    bind:selectedRow
+  />
+</div>
+
+<style>
+  .table {
+    height: 20%;
+  }
+</style>

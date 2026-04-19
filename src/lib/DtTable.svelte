@@ -15,6 +15,7 @@
    *   columns: Column[],
    *   rows: Object[],
    *   selectedRow: any,
+   *   selectedId: any,
    *   caption: string,
    *   scroll: 'nearest' | 'start' | 'center' | 'end' | ''
    * }}
@@ -23,6 +24,7 @@
     columns,
     rows,
     selectedRow = $bindable(null),
+    selectedId = $bindable(null),
     caption = "",
     scroll = "",
   } = $props();
@@ -37,7 +39,7 @@
   });
 </script>
 
-<table>
+<table style="height: 100%">
   <caption> {caption} </caption>
   <thead>
     <tr>
@@ -50,10 +52,13 @@
       {/each}
     </tr>
   </thead>
-  <tbody>
+  <tbody style="height: 100%">
     {#each rows as row}
       <tr
-        onclick={() => (selectedRow = row)}
+        onclick={() => {
+          selectedRow = row;
+          selectedId = row.id;
+        }}
         class:selected={selectedRow?.id === row.id}
       >
         {#each columns as column}

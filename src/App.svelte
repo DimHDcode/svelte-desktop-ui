@@ -80,7 +80,10 @@
   .grid-root {
     display: grid;
     grid-template-columns: 300px 1fr;
+    grid-template-rows: 1fr;
     grid-template-areas: "components" "component";
+    width: 100%;
+    height: 100%;
   }
   .components {
     display: flex;
