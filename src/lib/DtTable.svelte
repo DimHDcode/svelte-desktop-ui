@@ -32,7 +32,7 @@
   } = $props();
 
   $effect(() => {
-    if (scroll) {
+    if (scroll && (selectedRow || selectedId)) {
       tick().then(() => {
         const el = document.querySelector("tr.selected");
         el?.scrollIntoView({ block: scroll });
