@@ -6,5 +6,6 @@ export { default as DtInputNumber } from "./DtInputNumber.svelte";
 export { default as DtListBox } from "./DtListBox.svelte";
 export { default as DtModalWindow } from "./DtModalWindow.svelte";
 export { default as DtSelect } from "./DtSelect.svelte";
-export { default as DtTable } from "./DtTable.svelte";
 export { default as DtGrid } from "./DtGrid.svelte";
+export { default as DtSwitch } from "./DtSwitch.svelte";
+export { default as DtToggleButton } from "./DtToggleButton.svelte";

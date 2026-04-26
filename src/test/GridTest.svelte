@@ -1,7 +1,6 @@
 <script>
   import DtButton from "../lib/DtButton.svelte";
   import DtGrid from "../lib/DtGrid.svelte";
-  import DtSelect from "../lib/DtSelect.svelte";
 
   const columns = [
     {
@@ -68,8 +67,6 @@
     },
   ]);
   let selectedRow = $state(1);
-
-  $inspect(rows);
 </script>
 
 {#snippet ageCell(row)}
@@ -78,20 +75,18 @@
   >
 {/snippet}
 
-{#snippet nameCell(row)}
-  <DtSelect {options} />
-{/snippet}
-
 <div class="table">
   <DtGrid
     {columns}
     {rows}
+    width="50%"
     rowHeight={100}
-    snippets={{ ageCell, nameCell }}
+    snippets={{ ageCell }}
     caption="Long Long Table Caption with Text text text"
     bind:selectedRow
     returnId={true}
     select={true}
+    scroll=""
   />
 </div>
 

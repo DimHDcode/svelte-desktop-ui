@@ -172,3 +172,45 @@ dialog article {
 .dt-body-cell input::selection {
   background-color: brown;
 }
+
+label.disabled {
+  color: var(--pico-secondary);
+}
+.label-left label {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.option-block {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  width: 100%;
+}
+.dt-shortcut {
+  margin-left: auto;
+  line-height: 5px;
+  border-radius: var(--pico-border-radius);
+}
+
+.menu-wrapper {
+  position: relative;
+}
+.dt-menu {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  width: 300px;
+}
+
+.option-block {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+}
+
+.dt-shortcut {
+  margin-left: auto;
+}

@@ -14,4 +14,11 @@
   $inspect(selectedOption);
 </script>
 
-<DtSelect {options} bind:value={selectedOption} />
+<DtSelect
+  {options}
+  bind:value={selectedOption}
+  placeholder="Choose..."
+  width="10%"
+  label="Label"
+  labelPosition="top"
+/>

@@ -2,7 +2,7 @@
   import { tick } from "svelte";
   /**
    * @typedef {Object} Column
-   * @property {number} id
+   * @property {any} id
    * @property {string} title
    * @property {string} name
    * @property {string} width
@@ -18,6 +18,7 @@
    *   columns: Column[],
    *   rows: Object[],
    *   selectedRow?: any,
+   *   width?: String,
    *   onSelect?: any,
    *   returnId?: boolean,
    *   caption?: string,
@@ -31,6 +32,7 @@
     columns,
     rows,
     selectedRow = $bindable(null),
+    width = "100%",
     onSelect = null,
     returnId = false,
     caption = "",
@@ -66,7 +68,7 @@
   });
 </script>
 
-<div class="dt-table">
+<div class="dt-table" style:width>
   {#if caption}
     <div class="dt-caption">
       {caption}
@@ -113,7 +115,9 @@
               ? () => (editingCell = { rowId: row.id, colName: column.name })
               : null}
           >
-            {#if column.type}
+            {#if column.snippet && snippets[column.snippet]}
+              {@render snippets[column.snippet](row)}
+            {:else if column.type}
               {#if editingCell?.rowId === row.id && editingCell?.colName === column.name}
                 <input
                   type={column.type}
@@ -122,9 +126,7 @@
                   onkeydown={(e) => e.key === "Enter" && (editingCell = null)}
                 />
               {:else}
-                <span>
-                  {row[column.name]}
-                </span>
+                <span>{row[column.name]}</span>
               {/if}
             {:else}
               {row[column.name]}
@@ -138,7 +140,6 @@
 
 <style>
   .dt-table {
-    width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;

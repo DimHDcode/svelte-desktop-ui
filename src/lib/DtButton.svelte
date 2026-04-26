@@ -7,6 +7,7 @@
    * @param {any} [props.icon]
    * @param {number} [props.iconSize]
    * @param {string} [props.width]
+   * @param {boolean} [props.disabled]
    */
   let {
     children = () => "Button",
@@ -15,11 +16,12 @@
     icon: Icon = null,
     iconSize = 13,
     width = "",
+    disabled = false,
     ...rest
   } = $props();
 </script>
 
-<button style:width class:outline class={type} {...rest}>
+<button style:width class:outline class={type} {disabled} {...rest}>
   {#if Icon}
     <Icon size={iconSize} />
   {/if}
