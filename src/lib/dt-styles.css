@@ -156,3 +156,19 @@ input[type="color"] {
 dialog article {
   max-width: none;
 }
+
+.dt-body-cell select {
+  margin-bottom: 0;
+}
+
+.dt-body-cell input {
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  height: unset;
+  background-color: unset;
+  border: unset;
+}
+.dt-body-cell input::selection {
+  background-color: brown;
+}

@@ -1,6 +1,8 @@
 <script>
+  import DtButton from "../lib/DtButton.svelte";
   import DtGrid from "../lib/DtGrid.svelte";
-  import DtTable from "../lib/DtTable.svelte";
+  import DtSelect from "../lib/DtSelect.svelte";
+
   const columns = [
     {
       id: 1,
@@ -13,19 +15,22 @@
       id: 2,
       title: "Name",
       name: "name",
-      width: "70%",
+      width: "100%",
       align: "start",
       minWidth: "200px",
+      type: "text",
     },
     {
       id: 3,
       title: "Age",
       name: "age",
-      width: "30%",
+      width: "80зч",
+      align: "center",
+      snippet: "ageCell",
     },
   ];
 
-  let rows = [
+  let rows = $state([
     {
       id: 1,
       name: "Ivan",
@@ -61,24 +66,28 @@
       name: "Petr",
       age: 30,
     },
-  ];
+  ]);
   let selectedRow = $state(1);
 
-  // $inspect(selectedRow);
+  $inspect(rows);
 </script>
 
+{#snippet ageCell(row)}
+  <DtButton type="secondary" onclick={(e) => console.log(row)}
+    >{row.age}</DtButton
+  >
+{/snippet}
+
+{#snippet nameCell(row)}
+  <DtSelect {options} />
+{/snippet}
+
 <div class="table">
-  <DtTable
-    {columns}
-    {rows}
-    caption="Long Long Table Caption with Text text text"
-    bind:selectedRow
-    returnId={true}
-    select={true}
-  />
   <DtGrid
     {columns}
     {rows}
+    rowHeight={100}
+    snippets={{ ageCell, nameCell }}
     caption="Long Long Table Caption with Text text text"
     bind:selectedRow
     returnId={true}
@@ -89,7 +98,6 @@
 <style>
   .table {
     height: 20%;
-    display: flex;
-    gap: 1rem;
+    width: 100%;
   }
 </style>

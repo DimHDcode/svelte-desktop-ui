@@ -6,8 +6,11 @@
    * @property {string} title
    * @property {string} name
    * @property {string} width
+   * @property {string} align
+   * @property {string} type
    * @property {string} [width]
    * @property {string} [minWidth]
+   * @property {string} snippet
    */
 
   /**
@@ -15,27 +18,49 @@
    *   columns: Column[],
    *   rows: Object[],
    *   selectedRow?: any,
+   *   onSelect?: any,
    *   returnId?: boolean,
    *   caption?: string,
    *   scroll?: 'nearest' | 'start' | 'center' | 'end' | '',
-   *   select?: boolean
+   *   select?: boolean,
+   *   rowHeight?: number,
+   *   snippets?: Object{},
    * }}
    */
   let {
     columns,
     rows,
     selectedRow = $bindable(null),
+    onSelect = null,
     returnId = false,
     caption = "",
     scroll = "",
     select = true,
+    rowHeight = 32,
+    snippets = {},
   } = $props();
 
   $effect(() => {
     if (scroll && selectedRow) {
+      const el = document.querySelector(".dt-body-row.selected");
+      el?.scrollIntoView({ block: scroll });
+    }
+  });
+  let editingCell = $state(null); // { rowId, colName }
+  $effect(() => {
+    if (!editingCell) return;
+
+    function handleClick() {
+      editingCell = null;
+    }
+
+    document.addEventListener("click", handleClick);
+    return () => document.removeEventListener("click", handleClick);
+  });
+  $effect(() => {
+    if (editingCell) {
       tick().then(() => {
-        const el = document.querySelector("tr.selected");
-        el?.scrollIntoView({ block: scroll });
+        document.querySelector(".editing input")?.focus();
       });
     }
   });
@@ -51,7 +76,8 @@
     {#each columns as column}
       <div
         class="dt-head-cell"
-        style:width={column.width}
+        style:width={column.width ? column.width : "100%"}
+        style:justify-content={column.align}
         style:min-width={column.minWidth}
       >
         {column.title}
@@ -62,6 +88,7 @@
     {#each rows as row}
       <div
         class="dt-body-row"
+        style:height="{rowHeight}px"
         onclick={() => {
           if (!select) return;
           if (returnId) {
@@ -69,6 +96,7 @@
           } else {
             selectedRow = row;
           }
+          onSelect?.(selectedRow);
         }}
         class:selected={returnId
           ? selectedRow === row.id
@@ -77,11 +105,30 @@
         {#each columns as column}
           <div
             class="dt-body-cell"
-            style:width={column.width}
-            style:text-align={column.align}
+            style:width={column.width ? column.width : "100%"}
+            style:justify-content={column.align}
             style:min-width={column.minWidth}
+            onclick={column.snippet ? (e) => e.stopPropagation() : null}
+            ondblclick={column.type
+              ? () => (editingCell = { rowId: row.id, colName: column.name })
+              : null}
           >
-            {row[column.name]}
+            {#if column.type}
+              {#if editingCell?.rowId === row.id && editingCell?.colName === column.name}
+                <input
+                  type={column.type}
+                  bind:value={row[column.name]}
+                  onclick={(e) => e.stopPropagation()}
+                  onkeydown={(e) => e.key === "Enter" && (editingCell = null)}
+                />
+              {:else}
+                <span>
+                  {row[column.name]}
+                </span>
+              {/if}
+            {:else}
+              {row[column.name]}
+            {/if}
           </div>
         {/each}
       </div>
@@ -124,9 +171,17 @@
     border-bottom: var(--pico-border-width) solid var(--pico-table-border-color);
     color: var(--pico-color);
     font-weight: var(--pico-font-weight);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
   }
   .dt-body-row.selected {
     background-color: var(--pico-primary-background);
+  }
+  .dt-body-row:not(.selected) {
+    cursor: pointer;
   }
   .dt-body-row:not(.selected):hover {
     background-color: var(--pico-form-element-background-color);
