@@ -4,7 +4,7 @@
     items,
     width = "100%",
     selectedItem = $bindable(),
-    onaction,
+    onclick,
     onhover,
   } = $props();
   let prev = $state(selectedItem);
@@ -18,7 +18,7 @@
 <svelte:window
   onclick={(e) => {
     if (selectEl && !selectEl.contains(e.target)) {
-      onaction?.();
+      onclick?.();
     }
   }}
 />
@@ -32,11 +32,13 @@
   {#each items as item}
     <option
       value={item}
-      onmouseenter={() => onhover?.(item)}
+      onmouseenter={() => {
+        onhover?.(item);
+      }}
       onclick={(e) => {
         e.preventDefault();
         prev = item;
-        onaction?.(item);
+        onclick?.(item);
       }}
       ><div class="option-block">
         <item.icon size={16} />{item.item}

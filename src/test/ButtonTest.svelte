@@ -20,6 +20,7 @@
     <DtButton type="contrast" icon={Menu}>CONTRAST WITH ICON</DtButton>
   </div>
 </div>
+<DtButton compact>COMPACT</DtButton>
 
 <style>
   .root {
