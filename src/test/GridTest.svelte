@@ -97,7 +97,7 @@
 
 <style>
   .table {
-    height: 20%;
+    height: 70%;
     width: 100%;
   }
 </style>
