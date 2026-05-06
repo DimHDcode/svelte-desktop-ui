@@ -7,8 +7,8 @@
 <DtModalWindow
   title="Settings"
   buttons={["Yes", "No"]}
-  width="85vw"
-  height="85vh"
+  width="50vw"
+  height="50vh"
 >
   <div class="modal-content">Modal Content</div>
 </DtModalWindow>
