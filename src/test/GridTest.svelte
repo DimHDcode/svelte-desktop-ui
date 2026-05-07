@@ -1,5 +1,5 @@
 <script>
-  import DtButton from "../lib/DtButton.svelte";
+  import DtButton from "../lib/Button.svelte";
   import DtGrid from "../lib/DtGrid.svelte";
   import Trach2 from "@lucide/svelte/icons/trash-2";
 

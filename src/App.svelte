@@ -2,7 +2,7 @@
   import ColorPicker from "./test/ColorPickerTest.svelte";
   import DtListBox from "./lib/DtListBox.svelte";
   import DtSelect from "./lib/DtSelect.svelte";
-  import ButtonsGroup from "./test/ButtonsGroup.svelte";
+  import ButtonGroup from "./test/ButtonGroupTest.svelte";
   import ButtonTest from "./test/ButtonTest.svelte";
   import DialogTest from "./test/DialogTest.svelte";
   import InputNumber from "./test/InputNumberTest.svelte";
@@ -14,6 +14,8 @@
   import MenuTest from "./test/MenuTest.svelte";
   import ListBoxTest from "./test/ListBoxTest.svelte";
   import Menu from "@lucide/svelte/icons/menu";
+  import TagTest from "./test/TagTest.svelte";
+  import DrawerTest from "./test/DrawerTest.svelte";
 
   let listItems = $state([
     {
@@ -22,7 +24,7 @@
     },
     {
       id: 2,
-      item: "Buttons Group",
+      item: "Button Group",
     },
     {
       id: 3,
@@ -64,11 +66,20 @@
       id: 12,
       item: "ListBox",
     },
+    {
+      id: 13,
+      item: "Tag",
+    },
+
+    {
+      id: 14,
+      item: "Drawer",
+    },
   ]);
   let selectedItem = $state(listItems[0]);
   const components = {
     1: ButtonTest,
-    2: ButtonsGroup,
+    2: ButtonGroup,
     3: GridTest,
     4: SelectTest,
     5: ColorPicker,
@@ -79,124 +90,14 @@
     10: ToggleButtonTest,
     11: MenuTest,
     12: ListBoxTest,
+    13: TagTest,
+    14: DrawerTest,
   };
   let Component = $derived(components[selectedItem.id]);
-  // $inspect(selectedItem);
-  const themeOptions = [
-    {
-      id: 1,
-      option: "Blue",
-      css: "pico.blue.min.css",
-    },
-    {
-      id: 2,
-      option: "Amber",
-      css: "pico.amber.min.css",
-    },
-    {
-      id: 3,
-      option: "Cyan",
-      css: "pico.cyan.min.css",
-    },
-    {
-      id: 4,
-      option: "Fuchsia",
-      css: "pico.fuchsia.min.css",
-    },
-    {
-      id: 5,
-      option: "Green",
-      css: "pico.green.min.css",
-    },
-    {
-      id: 6,
-      option: "Grey",
-      css: "pico.grey.min.css",
-    },
-    {
-      id: 7,
-      option: "Indigo",
-      css: "pico.indigo.min.css",
-    },
-    {
-      id: 8,
-      option: "Jade",
-      css: "pico.jade.min.css",
-    },
-    {
-      id: 9,
-      option: "Lime",
-      css: "pico.lime.min.css",
-    },
-    {
-      id: 10,
-      option: "Orange",
-      css: "pico.orange.min.css",
-    },
-    {
-      id: 11,
-      option: "Pink",
-      css: "pico.pink.min.css",
-    },
-    {
-      id: 12,
-      option: "Pumpkin",
-      css: "pico.pumpkin.min.css",
-    },
-    {
-      id: 13,
-      option: "Purple",
-      css: "pico.purple.min.css",
-    },
-    {
-      id: 14,
-      option: "Red",
-      css: "pico.red.min.css",
-    },
-    {
-      id: 14,
-      option: "Sand",
-      css: "pico.sand.min.css",
-    },
-    {
-      id: 15,
-      option: "Slate",
-      css: "pico.slate.min.css",
-    },
-    {
-      id: 16,
-      option: "Violet",
-      css: "pico.violet.min.css",
-    },
-    {
-      id: 17,
-      option: "Yellow",
-      css: "pico.yellow.min.css",
-    },
-    {
-      id: 18,
-      option: "Zinc",
-      css: "pico.zinc.min.css",
-    },
-  ];
-
-  let selectedTheme = $state(themeOptions[0]);
-
-  $effect(() => {
-    const link = document.querySelector("link[data-theme]");
-    if (link) link.href = `/svelte-desktop-ui/${selectedTheme.css}`;
-  });
 </script>
 
 <div class="header">
   <div class="lib-name">Svelte Desktop UI</div>
-  <DtSelect
-    bind:value={selectedTheme}
-    options={themeOptions}
-    width="300px"
-    label="Theme"
-    labelPosition="left"
-  />
 </div>
 <div class="wrapper">
   <div class="grid-root">
@@ -239,7 +140,8 @@
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
-    height: 100%;
+    height: 50%;
+    overflow: hidden;
     gap: 10px;
     padding-left: 10px;
     grid-template: component;

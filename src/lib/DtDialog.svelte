@@ -1,5 +1,5 @@
 <script>
-  import DtButton from "./DtButton.svelte";
+  import DtButton from "./Button.svelte";
   let {
     message = "Are you sure?",
     buttons = ["Ok", "Cancel"],

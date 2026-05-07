@@ -1,5 +1,5 @@
 <script>
-  import DtButton from "../lib/DtButton.svelte";
+  import DtButton from "../lib/Button.svelte";
   import DtDialog from "../lib/DtDialog.svelte";
 
   let value = $state(null);

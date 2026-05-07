@@ -1,3 +1,9 @@
+@import "@fontsource/roboto";
+@import "@blueprintjs/core/lib/css/blueprint-design-tokens.css";
+@import "@blueprintjs/core/lib/css/blueprint.css";
+@import "@blueprintjs/icons/lib/css/blueprint-icons.css";
+@import "tabulator-tables/dist/css/tabulator_site_dark.min.css";
+
 body,
 html,
 #app {
@@ -6,5 +12,72 @@ html,
   overflow: hidden;
   padding: 0;
   margin: 0;
+  box-sizing: border-box;
+  background-color: black;
+  user-select: none;
+}
+
+.bp6-dark :focus {
+  outline: none;
+}
+
+/* :root {
+  --bp-intent-default-rest: rgb(46, 46, 46) !important;
+} */
+
+.tabulator-row.tabulator-selected {
+  background-color: var(--bp-intent-primary-active);
+}
+.tabulator-row.tabulator-selected:hover {
+  background-color: var(--bp-intent-primary-active);
+}
+
+.tabulator-header {
+  border-bottom-color: var(--bp-intent-primary-active) !important;
+}
+
+.tabulator-cell:has(.tabulator-custom) {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.tabulator-custom {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+/* .tabulator-row.tabulator-row-even:not(.tabulator-selected) {
+  background-color: color-mix(
+    in srgb,
+    var(--bp-intent-default-active) #383e47 30%,
+    var(--bp-palette-black)
+  );
+  border-bottom: 1px solid rgb(37, 37, 37);
+}
+.tabulator-row.tabulator-row-odd:not(.tabulator-selected) {
+  background-color: color-mix(
+    in srgb,
+    var(--bp-intent-default-active) #383e47 30%,
+    var(--bp-palette-black)
+  );
+  border-bottom: 1px solid rgb(37, 37, 37);
+} */
+
+/* .tabulator-row.tabulator-row-odd:hover:not(.tabulator-selected) {
+  background-color: rgb(30, 30, 30);
+}
+.tabulator-row.tabulator-row-even:hover:not(.tabulator-selected) {
+  background-color: rgb(30, 30, 30);
+} */
+
+.tabulator-row .tabulator-cell {
+  border: none;
+}
+
+.tabulator .tabulator-header .tabulator-col {
+  border: none;
+}
+
+.tabulator {
   box-sizing: border-box;
 }

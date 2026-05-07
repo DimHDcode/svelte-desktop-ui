@@ -1,190 +1,205 @@
 <script>
-  import { tick } from "svelte";
-  /**
-   * @typedef {Object} Column
-   * @property {any} id
-   * @property {string} title
-   * @property {string} name
-   * @property {string} width
-   * @property {string} align
-   * @property {string} type
-   * @property {string} [width]
-   * @property {string} [minWidth]
-   * @property {string} snippet
-   */
+  import { createRawSnippet, mount, onDestroy, onMount, unmount } from "svelte";
+  import { TabulatorFull as Tabulator } from "tabulator-tables";
+  import Button from "./Button.svelte";
+  import Tag from "./Tag.svelte";
+  import { table_nextPage } from "@tanstack/svelte-table/static-functions";
 
-  /**
-   * @type {{
-   *   columns: Column[],
-   *   rows: Object[],
-   *   selectedRow?: any,
-   *   width?: String,
-   *   onSelect?: any,
-   *   returnId?: boolean,
-   *   caption?: string,
-   *   scroll?: 'nearest' | 'start' | 'center' | 'end' | '',
-   *   select?: boolean,
-   *   rowHeight?: number,
-   *   snippets?: Object{},
-   * }}
-   */
-  let {
-    columns,
-    rows,
-    selectedRow = $bindable(null),
-    width = "100%",
-    onSelect = null,
-    returnId = false,
-    caption = "",
-    scroll = "",
-    select = true,
-    rowHeight = 32,
-    snippets = {},
-  } = $props();
+  // let tabledata = $state([
+  //   { id: 1, name: "Oli Bob", age: "12", col: "red", dob: "12/02/1976" },
+  //   { id: 2, name: "Mary May", age: "1", col: "blue", dob: "14/05/1982" },
+  //   {
+  //     id: 3,
+  //     name: "Christine Lobowski",
+  //     age: "42",
+  //     col: "green",
+  //     dob: "22/05/1982",
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "Brendon Philips",
+  //     age: "125",
+  //     col: "orange",
+  //     dob: "01/08/1980",
+  //   },
+  //   {
+  //     id: 5,
+  //     name: "Margret Marmajuke",
+  //     age: "16",
+  //     col: "yellow",
+  //     dob: "31/01/1999",
+  //   },
+  // ]);
 
-  $effect(() => {
-    if (scroll && selectedRow) {
-      const el = document.querySelector(".dt-body-row.selected");
-      el?.scrollIntoView({ block: scroll });
-    }
-  });
-  let editingCell = $state(null); // { rowId, colName }
-  $effect(() => {
-    if (!editingCell) return;
+  const names = [
+    "Oli Bob",
+    "Mary May",
+    "Christine Lobowski",
+    "Brendon Philips",
+    "Margret Marmajuke",
+    "Ибрагим",
+    "Лиза Грачева",
+    "Дядя Дима",
+    "Ирина Зиновьевна",
+    "Давид",
+    "Ева",
+  ];
+  const colors = [
+    "red",
+    "blue",
+    "green",
+    "orange",
+    "yellow",
+    "purple",
+    "cyan",
+    "magenta",
+  ];
 
-    function handleClick() {
-      editingCell = null;
-    }
+  const generateData = (count) => {
+    const data = [];
+    for (let i = 1; i <= count; i++) {
+      // Рандомим дату
+      const day = String(Math.floor(Math.random() * 28) + 1).padStart(2, "0");
+      const month = String(Math.floor(Math.random() * 12) + 1).padStart(2, "0");
+      const year = Math.floor(Math.random() * (2010 - 1960 + 1)) + 1960;
 
-    document.addEventListener("click", handleClick);
-    return () => document.removeEventListener("click", handleClick);
-  });
-  $effect(() => {
-    if (editingCell) {
-      tick().then(() => {
-        document.querySelector(".editing input")?.focus();
+      data.push({
+        id: i,
+        // Выбираем рандомное имя из списка
+        name: names[Math.floor(Math.random() * names.length)],
+        // Возраст строкой, как в твоем рефе
+        age: String(Math.floor(Math.random() * 90) + 1),
+        // Рандомный цвет
+        col: colors[Math.floor(Math.random() * colors.length)],
+        // Склеиваем дату
+        dob: `${day}/${month}/${year}`,
       });
     }
+    return data;
+  };
+
+  // Твой реактивный объект в Svelte 5
+  let tabledata = $state(generateData(200));
+
+  // $inspect(tabledata);
+  let emptyEl = $state(null);
+  let gridEl = $state(null);
+  let table = $state();
+  let tableBuilt = $state(false);
+  let selectedRow = $state(tabledata[0].id);
+  // $inspect(selectedRow);
+
+  $effect(() => {
+    if (!tableBuilt) return;
+    table.selectRow(selectedRow);
+    table.scrollToRow(selectedRow, "center", false);
+  });
+
+  let customNodes = [];
+
+  onMount(() => {
+    table = new Tabulator(gridEl, {
+      data: $state.snapshot(tabledata),
+      layout: "fitColumns",
+      maxHeight: "100%",
+      rowHeight: 30,
+      placeholder: emptyEl,
+      movableRows: true,
+      selectableRows: 1,
+      scrollToRowIfVisible: true,
+      columnDefaults: {
+        headerSort: false,
+      },
+      renderVertical: "virtual",
+      height: "100%",
+      selectableRowsCheck: (row) => {
+        return row.isSelected() ? false : true;
+      },
+      columns: [
+        { formatter: "rownum", hozAlign: "center", width: 40 },
+        { title: "Name", field: "name", width: 150 },
+        {
+          title: "Age",
+          field: "age",
+          hozAlign: "left",
+          formatter: (cell, params, onRendered) => {
+            let content = document.createElement("span");
+            content.classList.add("tabulator-custom");
+
+            const app = mount(Tag, {
+              target: content,
+              props: {
+                children: createRawSnippet(() => ({
+                  render: () => `<span>${cell.getValue()}</span>`,
+                })),
+              },
+            });
+            customNodes.push(app);
+            cell.getElement().addEventListener("reclaimed", () => {
+              unmount(app);
+            });
+
+            return content;
+          },
+        },
+        {
+          title: "Favourite Color",
+          field: "col",
+          formatter: (cell, params, onRendered) => {
+            var content = document.createElement("span");
+            content.classList.add("tabulator-custom");
+
+            const app = mount(Button, {
+              target: content,
+              props: {
+                text: cell.getValue(),
+                size: "small",
+                icon: "play",
+                onclick: () => console.log(cell.getRow().getData()),
+              },
+            });
+            customNodes.push(app);
+            cell.getElement().addEventListener("reclaimed", () => {
+              unmount(app);
+            });
+
+            return content;
+          },
+        },
+        {
+          title: "Date Of Birth",
+          field: "dob",
+          sorter: "date",
+          hozAlign: "center",
+        },
+      ],
+    });
+
+    table.on("tableBuilt", () => {
+      tableBuilt = true;
+    });
+    table.on("rowMoved", (d) => {
+      tabledata = table.getData();
+    });
+    table.on("rowSelected", (row) => {
+      selectedRow = row.getData().id;
+    });
+    table.on("rowDeselected", (row) => {});
+  });
+  onDestroy(() => {
+    table.destroy();
+    customNodes.forEach((app) => {
+      if (app) unmount(app);
+    });
   });
 </script>
 
-<div class="dt-table" style:width>
-  {#if caption}
-    <div class="dt-caption">
-      {caption}
-    </div>
-  {/if}
-  <div class="dt-head">
-    {#each columns as column}
-      <div
-        class="dt-head-cell"
-        style:width={column.width ? column.width : "100%"}
-        style:justify-content={column.align}
-        style:min-width={column.minWidth}
-      >
-        {column.title}
-      </div>
-    {/each}
-  </div>
-  <div class="dt-body">
-    {#each rows as row}
-      <div
-        class="dt-body-row"
-        style:height="{rowHeight}px"
-        onclick={() => {
-          if (!select) return;
-          if (returnId) {
-            selectedRow = row.id;
-          } else {
-            selectedRow = row;
-          }
-          onSelect?.(selectedRow);
-        }}
-        class:selected={returnId
-          ? selectedRow === row.id
-          : selectedRow?.id === row.id}
-      >
-        {#each columns as column}
-          <div
-            class="dt-body-cell"
-            style:width={column.width ? column.width : "100%"}
-            style:justify-content={column.align}
-            style:min-width={column.minWidth}
-            onclick={column.snippet ? (e) => e.stopPropagation() : null}
-            ondblclick={column.type
-              ? () => (editingCell = { rowId: row.id, colName: column.name })
-              : null}
-          >
-            {#if column.snippet && snippets[column.snippet]}
-              {@render snippets[column.snippet](row)}
-            {:else if column.type}
-              {#if editingCell?.rowId === row.id && editingCell?.colName === column.name}
-                <input
-                  type={column.type}
-                  bind:value={row[column.name]}
-                  onclick={(e) => e.stopPropagation()}
-                  onkeydown={(e) => e.key === "Enter" && (editingCell = null)}
-                />
-              {:else}
-                <span>{row[column.name]}</span>
-              {/if}
-            {:else}
-              {row[column.name]}
-            {/if}
-          </div>
-        {/each}
-      </div>
-    {/each}
-  </div>
-</div>
+<div bind:this={emptyEl}>empty oooooooo</div>
+<div bind:this={gridEl}></div>
 
-<style>
-  .dt-table {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-  .dt-caption {
-    display: block;
-    text-align: start;
-    font-size: calc(var(--pico-font-size) + 50%);
-    padding: 5px 0 5px 5px;
-    font-weight: 400;
-  }
-  .dt-head {
-    width: 100%;
-    display: flex;
-    background-color: var(--pico-form-element-background-color);
-  }
-  .dt-body {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-  }
-  .dt-body-row {
-    display: flex;
-  }
-  .dt-head-cell,
-  .dt-body-cell {
-    padding: calc(var(--pico-spacing) / 2) var(--pico-spacing);
-    border-bottom: var(--pico-border-width) solid var(--pico-table-border-color);
-    color: var(--pico-color);
-    font-weight: var(--pico-font-weight);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: flex;
-    align-items: center;
-  }
-  .dt-body-row.selected {
-    background-color: var(--pico-primary-background);
-  }
-  .dt-body-row:not(.selected) {
-    cursor: pointer;
-  }
-  .dt-body-row:not(.selected):hover {
-    background-color: var(--pico-form-element-background-color);
-  }
-</style>
+<Button
+  onclick={() => {
+    table.deselectRow();
+    selectedRow = 2;
+  }}>Select 2</Button
+>

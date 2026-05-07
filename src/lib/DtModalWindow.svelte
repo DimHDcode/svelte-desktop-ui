@@ -1,5 +1,5 @@
 <script>
-  import DtButton from "./DtButton.svelte";
+  import DtButton from "./Button.svelte";
   import X from "@lucide/svelte/icons/x";
   let {
     title = "App Settings",

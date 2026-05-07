@@ -1,6 +1,6 @@
 <script>
   import DtModalWindow from "../lib/DtModalWindow.svelte";
-  import DtButton from "../lib/DtButton.svelte";
+  import DtButton from "../lib/Button.svelte";
 </script>
 
 <DtButton command="show-modal" commandfor="dt-modal">Open modal</DtButton>
