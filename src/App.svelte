@@ -12,10 +12,13 @@
   import ToggleButtonTest from "./test/ToggleButtonTest.svelte";
   import MenuTest from "./test/MenuTest.svelte";
   import ListBoxTest from "./test/ListBoxTest.svelte";
-  import Menu from "@lucide/svelte/icons/menu";
   import TagTest from "./test/TagTest.svelte";
   import DrawerTest from "./test/DrawerTest.svelte";
   import CardTEst from "./test/CardTest.svelte";
+  import CalloutTest from "./test/CalloutTest.svelte";
+  import NonIdealStateTest from "./test/NonIdealStateTest.svelte";
+  import CompoundTagTest from "./test/CompoundTagTest.svelte";
+  import SegmentedControlTest from "./test/SegmentedControlTest.svelte";
 
   let listItems = $state([
     {
@@ -79,6 +82,22 @@
       id: 15,
       item: "Card",
     },
+    {
+      id: 16,
+      item: "Callout",
+    },
+    {
+      id: 17,
+      item: "Non-ideal state",
+    },
+    {
+      id: 18,
+      item: "Compound Tag",
+    },
+    {
+      id: 19,
+      item: "Segmented control",
+    },
   ]);
   let selectedItem = $state(listItems[0]);
   const components = {
@@ -97,6 +116,10 @@
     13: TagTest,
     14: DrawerTest,
     15: CardTEst,
+    16: CalloutTest,
+    17: NonIdealStateTest,
+    18: CompoundTagTest,
+    19: SegmentedControlTest,
   };
   let Component = $derived(components[selectedItem.id]);
 </script>
@@ -145,7 +168,7 @@
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
-    height: 50%;
+    height: 75%;
     overflow: hidden;
     gap: 10px;
     padding-left: 10px;

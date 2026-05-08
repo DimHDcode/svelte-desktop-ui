@@ -8,5 +8,6 @@
   elevation={3}
   compact
 >
-  0
+  Long-form information about the important content. This text is styled as
+  "Running text", so it may contain things like headers, links,
 </Card>
