@@ -1,6 +1,6 @@
 <script>
-  import DtButton from "../lib/Button.svelte";
-  import DtGrid from "../lib/DtGrid.svelte";
+  import Button from "../lib/Button/Button.svelte";
+  import DataGrid from "../lib/DataGrid/DataGrid.svelte";
   import Trach2 from "@lucide/svelte/icons/trash-2";
 
   const columns = [
@@ -71,28 +71,18 @@
 </script>
 
 {#snippet ageCell(row)}
-  <DtButton
+  <Button
     type="secondary"
     icon={Trach2}
     iconSize={14}
     compact
     shadow
-    onclick={(e) => console.log(row)}>{row.age}</DtButton
+    onclick={(e) => console.log(row)}>{row.age}</Button
   >
 {/snippet}
 
 <div class="table">
-  <DtGrid
-    {columns}
-    {rows}
-    width="50%"
-    snippets={{ ageCell }}
-    caption="Long Long Table Caption with Text text text"
-    bind:selectedRow
-    returnId={true}
-    select={true}
-    scroll=""
-  />
+  <DataGrid />
 </div>
 
 <style>

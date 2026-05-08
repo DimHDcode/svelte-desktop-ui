@@ -1,5 +1,5 @@
 <script>
-  import Button from "../lib/Button.svelte";
+  import Button from "../lib/Button/Button.svelte";
   import Drawer from "../lib/Drawer/Drawer.svelte";
   import DrawerBody from "../lib/Drawer/DrawerBody.svelte";
   import DrawerFooter from "../lib/Drawer/DrawerFooter.svelte";

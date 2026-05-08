@@ -1,6 +1,4 @@
 <script>
-  import DtButton from "../lib/Button.svelte";
-  import DtMenu from "../lib/DtMenu.svelte";
   import Menu from "@lucide/svelte/icons/menu";
   import Save from "@lucide/svelte/icons/save";
   const items = [

@@ -1,5 +1,5 @@
 <script>
-  import Button from "../lib/Button.svelte";
+  import Button from "../lib/Button/Button.svelte";
   import ButtonGroup from "../lib/ButtonGroup.svelte";
 </script>
 

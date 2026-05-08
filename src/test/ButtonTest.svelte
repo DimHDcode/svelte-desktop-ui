@@ -1,62 +1,62 @@
 <script>
-  import DtButton from "../lib/Button.svelte";
+  import Button from "../lib/Button/Button.svelte";
 </script>
 
 <div class="root">
   <div class="row">
-    <DtButton>Click Me</DtButton>
-    <DtButton intent="primary">Primary</DtButton>
-    <DtButton intent="success">Success</DtButton>
-    <DtButton intent="warning">Warning</DtButton>
-    <DtButton intent="danger">Danger</DtButton>
+    <Button>Click Me</Button>
+    <Button intent="primary">Primary</Button>
+    <Button intent="success">Success</Button>
+    <Button intent="warning">Warning</Button>
+    <Button intent="danger">Danger</Button>
   </div>
   <div class="row">
-    <DtButton variant="minimal">Minimal</DtButton>
-    <DtButton variant="outlined">Outlined</DtButton>
+    <Button variant="minimal">Minimal</Button>
+    <Button variant="outlined">Outlined</Button>
   </div>
   <div class="row">
-    <DtButton size="small">Small</DtButton>
-    <DtButton size="large">Large</DtButton>
+    <Button size="small">Small</Button>
+    <Button size="large">Large</Button>
   </div>
   <div class="row">
-    <DtButton fill>Fill With Button</DtButton>
+    <Button fill>Fill With Button</Button>
   </div>
   <div class="col">
     <div
       style="min-width: 300px; display: flex; flex-direction: column; gap: 10px"
     >
-      <DtButton alignText="start" fill icon="align-left" endIcon="caret-down"
-        >Start</DtButton
+      <Button alignText="start" fill icon="align-left" endIcon="caret-down"
+        >Start</Button
       >
-      <DtButton alignText="center" fill icon="align-center" endIcon="caret-down"
-        >Start</DtButton
+      <Button alignText="center" fill icon="align-center" endIcon="caret-down"
+        >Start</Button
       >
-      <DtButton alignText="end" fill icon="align-right" endIcon="caret-down"
-        >End</DtButton
+      <Button alignText="end" fill icon="align-right" endIcon="caret-down"
+        >End</Button
       >
     </div>
   </div>
   <div class="row" style="max-width: 300px;">
-    <DtButton ellipsizeText
-      >This is a very long button label that will be truncated</DtButton
+    <Button ellipsizeText
+      >This is a very long button label that will be truncated</Button
     >
   </div>
   <div class="row">
-    <DtButton icon="refresh" intent="danger" text="Reset" />
-    <DtButton icon="user" endIcon="caret-down" text="Profile settings" />
-    <DtButton endIcon="arrow-right" intent="success" text="Next step" />
+    <Button icon="refresh" intent="danger" text="Reset" />
+    <Button icon="user" endIcon="caret-down" text="Profile settings" />
+    <Button endIcon="arrow-right" intent="success" text="Next step" />
   </div>
   <div class="row">
-    <DtButton icon="edit" />
-    <DtButton icon="share" variant="outlined" />
-    <DtButton icon="filter" intent="primary" variant="minimal" />
-    <DtButton icon="add" size="small" intent="success" />
-    <DtButton icon="trash" disabled={true} intent="danger" />
+    <Button icon="edit" />
+    <Button icon="share" variant="outlined" />
+    <Button icon="filter" intent="primary" variant="minimal" />
+    <Button icon="add" size="small" intent="success" />
+    <Button icon="trash" disabled={true} intent="danger" />
   </div>
   <div class="row">
-    <DtButton>Default</DtButton>
-    <DtButton active={true}>Active</DtButton>
-    <DtButton disabled={true}>Disabled</DtButton>
+    <Button>Default</Button>
+    <Button active={true}>Active</Button>
+    <Button disabled={true}>Disabled</Button>
   </div>
 </div>
 

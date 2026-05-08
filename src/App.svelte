@@ -1,7 +1,6 @@
 <script>
   import ColorPicker from "./test/ColorPickerTest.svelte";
   import DtListBox from "./lib/DtListBox.svelte";
-  import DtSelect from "./lib/DtSelect.svelte";
   import ButtonGroup from "./test/ButtonGroupTest.svelte";
   import ButtonTest from "./test/ButtonTest.svelte";
   import DialogTest from "./test/DialogTest.svelte";
@@ -16,6 +15,7 @@
   import Menu from "@lucide/svelte/icons/menu";
   import TagTest from "./test/TagTest.svelte";
   import DrawerTest from "./test/DrawerTest.svelte";
+  import CardTEst from "./test/CardTest.svelte";
 
   let listItems = $state([
     {
@@ -75,6 +75,10 @@
       id: 14,
       item: "Drawer",
     },
+    {
+      id: 15,
+      item: "Card",
+    },
   ]);
   let selectedItem = $state(listItems[0]);
   const components = {
@@ -92,6 +96,7 @@
     12: ListBoxTest,
     13: TagTest,
     14: DrawerTest,
+    15: CardTEst,
   };
   let Component = $derived(components[selectedItem.id]);
 </script>

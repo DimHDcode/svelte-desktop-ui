@@ -1,5 +1,5 @@
 <script>
-  import DtButton from "./Button.svelte";
+  import Button from "./Button/Button.svelte";
   import X from "@lucide/svelte/icons/x";
   let {
     title = "App Settings",
@@ -18,14 +18,14 @@
       style="height: 40px; display: flex; justify-content: space-between;"
     >
       {title}
-      <DtButton
+      <Button
         type="secondary"
         commandfor="dt-modal"
         command="close"
         outline
         icon={X}
         onclick={() => (value = "closeModal")}
-      ></DtButton>
+      ></Button>
     </header>
     <div style=" height: calc(100% - {buttons ? '80px' : '40px'});">
       {@render children()}
@@ -36,11 +36,11 @@
         style="height: 40px; display: flex; gap: 1rem; justify-content: center;"
       >
         {#each buttons as button}
-          <DtButton
+          <Button
             width={buttonWidth}
             commandfor="dt-modal"
             command="close"
-            onclick={() => (value = button)}>{button}</DtButton
+            onclick={() => (value = button)}>{button}</Button
           >
         {/each}
       </footer>

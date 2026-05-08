@@ -1,8 +1,8 @@
 <script>
   import { createRawSnippet, mount, onDestroy, onMount, unmount } from "svelte";
   import { TabulatorFull as Tabulator } from "tabulator-tables";
-  import Button from "./Button.svelte";
-  import Tag from "./Tag.svelte";
+  import Button from "../Button/Button.svelte";
+  import Tag from "../Tag/Tag.svelte";
   import { table_nextPage } from "@tanstack/svelte-table/static-functions";
 
   // let tabledata = $state([
@@ -81,6 +81,85 @@
   // Твой реактивный объект в Svelte 5
   let tabledata = $state(generateData(200));
 
+  var cellContextMenu = [
+    {
+      label: "Reset Value",
+      action: function (e, cell) {
+        cell.setValue("");
+      },
+    },
+  ];
+  let columns = [
+    { formatter: "rownum", hozAlign: "center", width: 40, resizable: false },
+    {
+      title: "Name",
+      field: "name",
+      width: 150,
+      resizable: false,
+      editor: "input",
+      editorParams: {
+        mask: "99:99:99:99",
+        selectContents: true,
+      },
+    },
+    {
+      title: "Age",
+      field: "age",
+      hozAlign: "left",
+      resizable: false,
+      formatter: (cell, params, onRendered) => {
+        let content = document.createElement("span");
+        content.classList.add("tabulator-custom");
+
+        const app = mount(Tag, {
+          target: content,
+          props: {
+            children: createRawSnippet(() => ({
+              render: () => `<span>${cell.getValue()}</span>`,
+            })),
+          },
+        });
+        customNodes.push(app);
+        cell.getElement().addEventListener("reclaimed", () => {
+          unmount(app);
+        });
+
+        return content;
+      },
+    },
+    {
+      title: "Favourite Color",
+      field: "col",
+      resizable: false,
+      formatter: (cell, params, onRendered) => {
+        var content = document.createElement("span");
+        content.classList.add("tabulator-custom");
+
+        const app = mount(Button, {
+          target: content,
+          props: {
+            text: cell.getValue(),
+            size: "small",
+            icon: "play",
+            onclick: () => console.log(cell.getRow().getData()),
+          },
+        });
+        customNodes.push(app);
+        cell.getElement().addEventListener("reclaimed", () => {
+          unmount(app);
+        });
+
+        return content;
+      },
+    },
+    {
+      title: "Date Of Birth",
+      field: "dob",
+      sorter: "date",
+      hozAlign: "center",
+    },
+  ];
+
   // $inspect(tabledata);
   let emptyEl = $state(null);
   let gridEl = $state(null);
@@ -100,6 +179,8 @@
   onMount(() => {
     table = new Tabulator(gridEl, {
       data: $state.snapshot(tabledata),
+      columns,
+      editTriggerEvent: "dblclick",
       layout: "fitColumns",
       maxHeight: "100%",
       rowHeight: 30,
@@ -115,64 +196,6 @@
       selectableRowsCheck: (row) => {
         return row.isSelected() ? false : true;
       },
-      columns: [
-        { formatter: "rownum", hozAlign: "center", width: 40 },
-        { title: "Name", field: "name", width: 150 },
-        {
-          title: "Age",
-          field: "age",
-          hozAlign: "left",
-          formatter: (cell, params, onRendered) => {
-            let content = document.createElement("span");
-            content.classList.add("tabulator-custom");
-
-            const app = mount(Tag, {
-              target: content,
-              props: {
-                children: createRawSnippet(() => ({
-                  render: () => `<span>${cell.getValue()}</span>`,
-                })),
-              },
-            });
-            customNodes.push(app);
-            cell.getElement().addEventListener("reclaimed", () => {
-              unmount(app);
-            });
-
-            return content;
-          },
-        },
-        {
-          title: "Favourite Color",
-          field: "col",
-          formatter: (cell, params, onRendered) => {
-            var content = document.createElement("span");
-            content.classList.add("tabulator-custom");
-
-            const app = mount(Button, {
-              target: content,
-              props: {
-                text: cell.getValue(),
-                size: "small",
-                icon: "play",
-                onclick: () => console.log(cell.getRow().getData()),
-              },
-            });
-            customNodes.push(app);
-            cell.getElement().addEventListener("reclaimed", () => {
-              unmount(app);
-            });
-
-            return content;
-          },
-        },
-        {
-          title: "Date Of Birth",
-          field: "dob",
-          sorter: "date",
-          hozAlign: "center",
-        },
-      ],
     });
 
     table.on("tableBuilt", () => {

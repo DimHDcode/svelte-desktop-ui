@@ -1,9 +1,9 @@
 <script>
   import DtModalWindow from "../lib/DtModalWindow.svelte";
-  import DtButton from "../lib/Button.svelte";
+  import Button from "../lib/Button/Button.svelte";
 </script>
 
-<DtButton command="show-modal" commandfor="dt-modal">Open modal</DtButton>
+<Button command="show-modal" commandfor="dt-modal">Open modal</Button>
 <DtModalWindow
   title="Settings"
   buttons={["Yes", "No"]}

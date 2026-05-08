@@ -1,5 +1,5 @@
 <script>
-  import DtButton from "./Button.svelte";
+  import Button from "./Button/Button.svelte";
   let {
     message = "Are you sure?",
     buttons = ["Ok", "Cancel"],
@@ -18,11 +18,11 @@
       style="display: flex; gap: 1rem; width: 100%; justify-content: center;"
     >
       {#each buttons as button}
-        <DtButton
+        <Button
           width={buttonWidth}
           commandfor="dt-dialog"
           command="close"
-          onclick={() => (value = button)}>{button}</DtButton
+          onclick={() => (value = button)}>{button}</Button
         >
       {/each}
     </div>
