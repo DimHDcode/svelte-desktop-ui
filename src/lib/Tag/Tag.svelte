@@ -1,8 +1,11 @@
 <script>
+  import { onDestroy, onMount } from "svelte";
+
   // @ts-nocheck
 
   let {
     children = () => "Tag",
+    label,
     fill = false,
     large = false,
     minimal = false,
@@ -15,6 +18,12 @@
     onclick = () => {},
     onremove = () => {},
   } = $props();
+  // onMount(() => {
+  //   console.log("Tag mount");
+  // });
+  // onDestroy(() => {
+  //   console.log("Tag destroy");
+  // });
 </script>
 
 <span
@@ -37,7 +46,11 @@
     <span class={`bp6-icon bp6-icon-${startIcon}`}></span>
   {/if}
   <span class="bp6-text-overflow-ellipsis bp6-fill">
-    {@render children()}
+    {#if label}
+      {label}
+    {:else}
+      {@render children()}
+    {/if}
   </span>
   {#if removable}
     <button class="bp6-tag-remove" onclick={() => onremove()}> </button>

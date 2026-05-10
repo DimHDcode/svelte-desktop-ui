@@ -21,10 +21,12 @@
     endIcon,
     ellipsizeText,
     text,
+    ref = $bindable(),
   } = $props();
 </script>
 
 <button
+  bind:this={ref}
   onclick={(e) => {
     onclick(e);
   }}

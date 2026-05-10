@@ -1,5 +1,10 @@
 <script>
-  let { title, children = () => {}, action = false, onclick } = $props();
+  let {
+    title,
+    children = () => {},
+    action = false,
+    onclick = () => {},
+  } = $props();
 </script>
 
 <div class="bp6-non-ideal-state bp6-non-ideal-state-vertical">

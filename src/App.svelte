@@ -19,87 +19,93 @@
   import NonIdealStateTest from "./test/NonIdealStateTest.svelte";
   import CompoundTagTest from "./test/CompoundTagTest.svelte";
   import SegmentedControlTest from "./test/SegmentedControlTest.svelte";
+  import ListBox from "./lib/ListBox/ListBox.svelte";
+  import PopoverTest from "./test/PopoverTest.svelte";
 
   let listItems = $state([
     {
-      id: 1,
-      item: "Button",
+      value: 1,
+      label: "Button",
     },
     {
-      id: 2,
-      item: "Button Group",
+      value: 2,
+      label: "Button Group",
     },
     {
-      id: 3,
-      item: "Data Grid",
+      value: 3,
+      label: "Data Grid",
     },
     {
-      id: 4,
-      item: "Select",
+      value: 4,
+      label: "Select",
     },
     {
-      id: 5,
-      item: "Color Picker",
+      value: 5,
+      label: "Color Picker",
     },
     {
-      id: 6,
-      item: "Input Number",
+      value: 6,
+      label: "Input Number",
     },
     {
-      id: 7,
-      item: "Dialog",
+      value: 7,
+      label: "Dialog",
     },
     {
-      id: 8,
-      item: "Modal Window",
+      value: 8,
+      label: "Modal Window",
     },
     {
-      id: 9,
-      item: "Switch",
+      value: 9,
+      label: "Switch",
     },
     {
-      id: 10,
-      item: "Toggle Button",
+      value: 10,
+      label: "Toggle Button",
     },
     {
-      id: 11,
-      item: "Menu",
+      value: 11,
+      label: "Menu",
     },
     {
-      id: 12,
-      item: "ListBox",
+      value: 12,
+      label: "ListBox",
     },
     {
-      id: 13,
-      item: "Tag",
+      value: 13,
+      label: "Tag",
     },
 
     {
-      id: 14,
-      item: "Drawer",
+      value: 14,
+      label: "Drawer",
     },
     {
-      id: 15,
-      item: "Card",
+      value: 15,
+      label: "Card",
     },
     {
-      id: 16,
-      item: "Callout",
+      value: 16,
+      label: "Callout",
     },
     {
-      id: 17,
-      item: "Non-ideal state",
+      value: 17,
+      label: "Non-ideal state",
     },
     {
-      id: 18,
-      item: "Compound Tag",
+      value: 18,
+      label: "Compound Tag",
     },
     {
-      id: 19,
-      item: "Segmented control",
+      value: 19,
+      label: "Segmented control",
+    },
+    {
+      value: 20,
+      label: "Popover",
     },
   ]);
-  let selectedItem = $state(listItems[0]);
+  let selectedItem = $state(listItems[0].value);
   const components = {
     1: ButtonTest,
     2: ButtonGroup,
@@ -120,8 +126,9 @@
     17: NonIdealStateTest,
     18: CompoundTagTest,
     19: SegmentedControlTest,
+    20: PopoverTest,
   };
-  let Component = $derived(components[selectedItem.id]);
+  let Component = $derived(components[selectedItem]);
 </script>
 
 <div class="header">
@@ -130,7 +137,7 @@
 <div class="wrapper">
   <div class="grid-root">
     <div class="components">
-      <DtListBox items={listItems} bind:selectedItem />
+      <ListBox items={listItems} bind:selectedItem fill size="small" />
     </div>
     <div class="component">
       {#if Component}

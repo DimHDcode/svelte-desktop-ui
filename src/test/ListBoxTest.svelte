@@ -1,56 +1,16 @@
 <script>
-  import DtListBox from "../lib/DtListBox.svelte";
-  import Menu from "@lucide/svelte/icons/menu";
+  import ListBox from "../lib/ListBox/ListBox.svelte";
 
-  let listItems = [
-    {
-      id: 1,
-      item: "Button",
-      icon: Menu,
-      hotkey: "CTRL A",
-    },
-    {
-      id: 2,
-      item: "Buttons Group",
-    },
-    {
-      id: 3,
-      item: "Data Grid",
-    },
-    {
-      id: 4,
-      item: "Select",
-    },
-    {
-      id: 5,
-      item: "Color Picker",
-    },
-    {
-      id: 6,
-      item: "Input Number",
-    },
-    {
-      id: 7,
-      item: "Dialog",
-    },
-    {
-      id: 8,
-      item: "Modal Window",
-    },
-    {
-      id: 9,
-      item: "Switch",
-    },
-    {
-      id: 10,
-      item: "Toggle Button",
-    },
-    {
-      id: 11,
-      item: "Menu",
-    },
+  const items = [
+    { value: "apple", label: "Apple", subLabel: "yaamy", divider: true },
+    { value: "banana", label: "Banana" },
+    { value: "blueberry", label: "Blueberry" },
+    { value: "grapes", label: "Grapes" },
+    { value: "pineapple", label: "Pineapple" },
+    { value: "orange", label: "Orange" },
+    { value: "kiwi", label: "Kiwi" },
   ];
-  let selectedItem = $state(listItems[0]);
+  let selectedItem = $state(items[0].value);
 </script>
 
-<DtListBox items={listItems} width="200px" bind:selectedItem />
+<ListBox {items} bind:selectedItem size="small" />

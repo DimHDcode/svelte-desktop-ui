@@ -10,6 +10,7 @@
     disabled = false,
     clearSelection = false,
     placeholder = "",
+    small = false,
   } = $props();
 
   const selectedLabel = $derived(
@@ -21,7 +22,7 @@
 <Select.Root type="single" bind:value {items} {disabled}>
   <div bind:clientWidth={selectWidth}>
     <Select.Trigger
-      class={`bp6-button bp6-align-left ${fill ? "bp6-fill" : ""}`}
+      class={`bp6-button bp6-align-left ${fill ? "bp6-fill" : ""} ${small ? "bp6-small" : ""}`}
     >
       <span class="bp6-icon bp6-icon-film"> </span>
       <span class="bp6-button-text">
@@ -46,7 +47,7 @@
     <Select.Content
       sideOffset={14}
       align="start"
-      class="bp6-popover bp6-dark bp6-popover-placement-bottom"
+      class={`bp6-popover bp6-dark bp6-popover-placement-bottom ${small ? "bp6-small" : ""}`}
     >
       <div
         class="bp6-popover-arrow"

@@ -1,3 +1,5 @@
+@layer libs, theme;
+
 @import "@fontsource/roboto";
 @import "@blueprintjs/core/lib/css/blueprint-design-tokens.css";
 @import "@blueprintjs/core/lib/css/blueprint.css";
@@ -38,11 +40,11 @@ html,
   border-bottom-color: var(--bp-intent-primary-active) !important;
 }
 
-.tabulator-cell:has(.tabulator-custom) {
+.tabulator-cell:has(.tabulator-custom-cell) {
   padding-top: 0;
   padding-bottom: 0;
 }
-.tabulator-custom {
+.tabulator-custom-cell {
   display: flex;
   align-items: center;
   height: 100%;
@@ -84,8 +86,24 @@ html,
 
 .tabulator {
   box-sizing: border-box;
+  border-radius: 5px;
 }
 
 .tabulator-row .tabulator-cell.tabulator-editing {
   border-color: white;
+}
+
+.tabulator-row
+  .tabulator-cell.tabulator-row-handle
+  .tabulator-row-handle-box
+  .tabulator-row-handle-bar {
+  background-color: #808080;
+}
+
+.tabulator-row .tabulator-cell.tabulator-frozen.tabulator-frozen-left {
+  border: unset;
+}
+
+.tabulator .tabulator-header .tabulator-frozen.tabulator-frozen-left {
+  border: unset;
 }
